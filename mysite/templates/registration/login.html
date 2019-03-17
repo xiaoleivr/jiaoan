@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}
+登录
+{% endblock %}
+{% block content %}
+    <div class="row-fluid">
+        <div class="span6">
+            <form class="form" action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="hidden" name="next" value="{{ next }}">
+                <p><input class="btn-primary btn-large" type="submit" value="登录"></p>
+            </form>
+            {% if messages %}
+                {% for message in messages %}
+                    {{ message|safe }}
+                {% endfor %}
+            {% endif %}
+                <a href="{% url 'password_reset' %}">忘记密码？</a>
+            没有账号？<a href="{% url 'register' %}">立即注册</a>
+        </div>
+    </div>
+{% endblock %}

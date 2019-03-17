@@ -1,0 +1,64 @@
+/*BASE部分*/
+.header {
+    height: 80px;
+    line-height: 80px;
+}
+
+.header .logo {
+    font-size: 30px;
+}
+
+.header .nav {
+    position: relative;
+    top: 20px;
+}
+
+.header .span2 {
+    text-align: right;
+}
+
+
+.con_right {
+    border-left: 1px solid #ddd;
+    padding-left: 15px;
+}
+
+.pub_right {
+    text-align: right;
+}
+
+.home_bar {
+    background: url("../img/h3bg.png") repeat-x;
+    padding-left: 10px;
+    height: 32px;
+    line-height: 32px;
+    color: #1f6377;
+}
+
+.content {
+    min-height: 480px;
+}
+
+.banner {
+    background: url("../img/d91d06a683578344bec2acaf390163da.png");
+    font-size: 48px;
+    height: 300px;
+    line-height: 300px;
+    text-align: center;
+    color: #0066cc;
+}
+
+.footer {
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    background-color: #dddddd;
+}
+
+/*个人中心*/
+.center_users .thumbnails li:nth-child(4n+1) {
+    margin-left: 0px;
+}
+.thumbnails p {
+    text-align: center;
+}

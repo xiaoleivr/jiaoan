@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}
+注册
+{% endblock %}
+{% block content %}
+<form class="form" action="." method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p><input type="submit" value="注册" class="btn-primary btn-large"></p>
+</form>
+{% endblock %}
+
+<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#id_username').blur(function () {
+            username = $(this).val();
+            $.get('{% url 'user_chk' %}',{username:username},function (data) {
+                if (data['status'] === 'ko') {
+                    alert('用户已经存在')
+                }
+            });
+        });
+    });
+</script>

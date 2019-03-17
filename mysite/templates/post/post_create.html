@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row-fluid">
+        <div class="span6">
+            <form action="." method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <p><input type="submit" class="but" value="提交"></p>
+            </form>
+        </div>
+    </div>
+{% endblock %}

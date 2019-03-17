@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}
+文章列表
+{% endblock %}
+{% block content %}
+    <h4>文章列表：<small>{{ section }}</small></h4>
+{% for post in posts %}
+<p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></p>
+{% endfor %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}
+编辑个人资料
+{% endblock %}
+{% block content %}
+    <div class="row-fluid">
+        <div class="span6">
+            <form action="#" method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                {{ user_form.as_p }}
+                {{ profile_form.as_p }}
+                <p><input class="btn" type="submit" value="保存修改"></p>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% load static %}
+{% load post_tags %}
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Python1812- {% block title %}主页{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap-responsive.min.css' %}">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        {% block header %}
+            <div class="row-fluid">
+                <div class="span3 logo"><a href="/">Python1812</a></div>
+                <div class="span7 navbar">
+                    <ul class="nav">
+                        {% show_categorys %}
+                    </ul>
+                </div>
+                <div class="span2">
+                    {% if not request.user.username == '' %}
+                        {% if request.user.first_name %}
+                            你好：{{ request.user.first_name }}
+                        {% else %}
+                            你好：{{ request.user }}
+                        {% endif %}
+                        <a href="{% url 'logout' %}">退出</a>
+                    {% endif %}
+                    <a href="{% url 'dashboard' %}">个人中心</a>
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+    <div class="content">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+    <div class="footer">
+        {% block footer %}
+            版权所有：Python1812
+        {% endblock %}
+    </div>
+</div>
+</body>
+</html>
+
+<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script>
+    var csrftoken = Cookies.get('csrftoken');
+
+    function csrfSafeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    {% block script %}
+
+    {% endblock %}
+
+</script>
+

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}
+    个人资料
+{% endblock %}
+{% block content %}
+    <h2>姓名：{{ object.user }}</h2>
+    <p>生日：{{ object.date_of_birth |date:'Y年m月d日' }}</p>
+    <p>个人介绍：{{ object.intro }}</p>
+    <p>共有 <span class="count">{{ object.followers.count }}</span>个粉丝</p>
+    <p>
+        {% with myprofile=request.user.profile followers=object.followers.all %}
+            {% if myprofile not in followers %}
+                <a data-toid="{{ object.id }}" data-action="like" data-fromid="{{ myprofile.id }}" href="#"
+                   class="like">关注</a>
+            {% else %}
+                <a data-toid="{{ object.id }}" data-action="unlike" data-fromid="{{ myprofile.id }}" href="#"
+                   class="like">取消关注</a>
+            {% endif %}
+            <a href="{% url 'pro_list' %}">返回用户中心</a>
+        {% endwith %}
+    </p>
+{% endblock %}
+
+{% block script %}
+{#    <script>#}
+        $(document).ready(function () {
+            $('a.like').click(function (e) {
+                e.preventDefault();
+                $.post('{% url 'like' %}',
+                    {
+                        fromid: $(this).data('fromid'),
+                        toid: $(this).data('toid'),
+                        action: $(this).data('action'),
+                    },
+                    function (data) {
+
+                        if (data['status'] === 'ok') {
+                            let previous_action = $('a.like').data('action');
+                            //切换 data-action 属性
+                            $('a.like').data('action', previous_action === 'like' ? 'unlike' : 'like');
+                            //切换按钮文本
+                            $('a.like').text(previous_action === 'like' ? '取消关注' : '关注');
+                            //更新总的喜欢人数
+                            let previous_likes = parseInt($('span.count').text());
+                            $('span.count').text(previous_action === 'like' ? previous_likes + 1 : previous_likes - 1);
+                        }
+                    }
+                );
+            });
+        });
+    {#</script>#}
+{% endblock %}

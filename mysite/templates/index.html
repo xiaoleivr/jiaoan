@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="banner">
+    欢迎来到Python1812
+    </div>
+    <div class="row-fluid">
+        <div class="span8 left">
+            <h4 class="home_bar">最新文章：</h4>
+            <div class="row-fluid">
+                <div class="span10">
+                    {% for post in posts %}
+                        <p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></p>
+                    {% endfor %}
+                </div>
+                <div class="span2 pub_right">
+                    {% for post in posts %}
+                        <p>
+                            <small>{{ post.publish | date:'Y-m-d' }}</small>
+                        </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="span4 con_right">
+            <h4 class="home_bar">热门文章：</h4>
+            {% for post in post_hot %}
+                <p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></p>
+            {% endfor %}
+            {% for post in real_hot %}
+                <p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

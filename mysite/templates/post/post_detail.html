@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row-fluid">
+        <div class="span9">
+            <h4>{{ object.title }}</h4>
+            <small>作者：<a href="{% url 'posts_by_user' object.profile.id %}">{{ object.profile.user }}</a> 发布日期：{{ object.publish |date:'Y-m-d' }}</small>
+            <hr>
+            <p>{{ object.body }}</p>
+            <hr>
+            <h4>文章评论：</h4>
+            {% for comment in object.post_comments.all %}
+                <p><small>用户：{{ comment.user }}</small></p>
+                <p>{{ comment.body }}</p>
+                <hr class="hr">
+            {% endfor %}
+            <h4>发表评论：</h4>
+            <div>
+                <form action="#" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <p><input type="button" value="提交"></p>
+                </form>
+            </div>
+        </div>
+        <div class="span3">
+            <h4>热门文章：</h4>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+{#<script>#}
+    $(document).ready(function () {
+        $(':button').click(function () {
+            data = {
+                'id' : {{ object.id }},
+                'body' : $('#id_body').val()
+            }
+            $.post('{% url "post_comment" %}',data,function (data) {
+                if (data['status'] === 'ok') {
+                    alert('发表评论成功。')
+                    window.location.reload()
+                }
+            })
+        });
+    });
+{#</script>#}
+{% endblock %}
+

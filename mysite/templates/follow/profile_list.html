@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block title %}
+    个人详情
+{% endblock %}
+{% block content %}
+    <div class="row-fluid">
+        <div class="span4">
+            <h4 class="home_bar">我的粉丝：</h4>
+            {% for profile in myself.followers.all %}
+                {{ profile.user }}
+            {% empty %}
+                没有粉丝
+            {% endfor %}
+            <h4 class="home_bar">我的关注：</h4>
+            {% for profile in myself.following.all %}
+                {{ profile.user }}
+            {% empty %}
+                没有关注
+            {% endfor %}
+        </div>
+        <div class="span8 center_users">
+            <h4 class="home_bar">所有用户：</h4>
+            <ul class="thumbnails">
+                {% for profile in profiles %}
+                    {% with total_follows=profile.followers.count %}
+                        <li class="span3">
+                            <a class="thumbnail" href="{{ profile.get_absolute_url }}">
+                                {% thumbnail profile.photo "100x100" as im %}
+                                    <img src="{{ im.url }}" alt="">
+                                {% empty %}
+                                    <img width="100" src="{% static 'img/12122H31938.jpg' %}" alt="">
+                                {% endthumbnail %}
+                            </a>
+                            <p><b>{{ profile.user }}</b> 粉丝：{{ total_follows }}个</p>
+                        </li>
+                    {% endwith %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

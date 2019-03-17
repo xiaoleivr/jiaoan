@@ -1,0 +1,3 @@
+{% for category in categories %}
+    <li><a href="{% url 'posts_by_cat' category.id %}">{{ category.title }}</a></li>
+{% endfor %}
